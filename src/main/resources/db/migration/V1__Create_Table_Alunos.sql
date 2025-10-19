@@ -1,0 +1,7 @@
+CREATE TABLE Alunos(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(120) NOT NULL,
+    email VARCHAR(120) NOT NULL,
+    senha VARCHAR(25) NOT NULL,
+    data_nascimento DATE NOT NULL
+);
