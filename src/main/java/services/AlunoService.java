@@ -5,6 +5,7 @@ import model.Aluno;
 import util.JPAUtil;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 public class AlunoService {
 
@@ -28,6 +29,19 @@ public class AlunoService {
                 em.close();
             }
         }
+    }
 
+    public List<Aluno> getAlunos() {
+        EntityManager em = JPAUtil.getEntityManager();
+        AlunoDao dao = new AlunoDao(em);
+        List<Aluno> alunos;
+
+        try {
+            alunos = dao.findAllAlunos();
+            return alunos;
+        } catch (Exception e) {
+
+            throw new RuntimeException("Falha ao buscar alunos.", e);
+        }
     }
 }
