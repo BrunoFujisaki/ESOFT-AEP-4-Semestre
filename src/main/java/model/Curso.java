@@ -20,9 +20,6 @@ public class Curso {
     private Professor professor;
 
     @OneToMany(mappedBy = "curso")
-    private List<AlunoCurso> matriculas;
-
-    @OneToMany(mappedBy = "curso")
     private List<Modulo> modulos = new ArrayList<>();
 
     public Curso() {
@@ -33,7 +30,6 @@ public class Curso {
         this.descricao = descricao;
         this.cargaHoraria = cargaHoraria;
         this.professor = professor;
-        this.matriculas = new ArrayList<>();
     }
 
     public Long getId() {
@@ -54,9 +50,5 @@ public class Curso {
 
     public Professor getProfessor() {
         return professor;
-    }
-
-    public List<AlunoCurso> getMatriculas() {
-        return matriculas;
     }
 }

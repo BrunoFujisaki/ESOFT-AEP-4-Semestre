@@ -1,6 +1,7 @@
 package services;
 
 import dao.CursoDao;
+import dto.CursoDTO;
 import model.Curso;
 import model.Professor;
 import util.JPAUtil;
@@ -9,22 +10,31 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 public class CursoService {
+    private static final ProfessorService professorService = new ProfessorService();
 
     public CursoService() {}
 
-    public void cadastrarCurso(Curso curso) {
+    public void cadastrarCurso(CursoDTO cursoDTO) {
         EntityManager em = JPAUtil.getEntityManager();
         CursoDao cursoDao = new CursoDao(em);
 
         try {
             em.getTransaction().begin();
-            cursoDao.save(curso);
+            var professor = professorService.buscarProfessorPorId(cursoDTO.professorId());
+            cursoDao.save(new Curso(
+                    cursoDTO.nome(),
+                    cursoDTO.descricao(),
+                    cursoDTO.cargaHoraria(),
+                    professor
+                    )
+            );
             em.getTransaction().commit();
+            System.out.println("✅ Curso cadastrado com sucesso!");
         } catch (Exception ex) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new RuntimeException("Erro ao cadastrar curso.", ex);
+            System.err.println("Erro ao cadastrar curso. "+ex.getMessage());
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -54,13 +64,9 @@ public class CursoService {
         CursoDao dao = new CursoDao(em);
 
         try {
-            Curso curso = dao.findById(id);
-            if (curso == null) {
-                throw new RuntimeException("Curso não encontrado com ID: " + id);
-            }
-            return curso;
+            return dao.findById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Falha ao buscar curso por ID.", e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -82,4 +88,5 @@ public class CursoService {
             }
         }
     }
+
 }
