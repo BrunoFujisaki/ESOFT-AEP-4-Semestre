@@ -9,6 +9,8 @@ public class Professor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    private String email;
+    private String especialidade;
 
     public Professor() {
     }
@@ -23,5 +25,25 @@ public class Professor {
 
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getEspecialidade() {
+        return especialidade;
     }
 }
