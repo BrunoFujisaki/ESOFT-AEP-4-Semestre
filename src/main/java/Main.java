@@ -1,13 +1,9 @@
 import controller.MenuController;
-
-import java.util.Scanner;
+import util.ScannerUtil;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        MenuController menuController = new MenuController(sc);
-        menuController.iniciar();
-        sc.close();
-
+        MenuController.iniciar();
+        ScannerUtil.fecharScanner();
     }
 }

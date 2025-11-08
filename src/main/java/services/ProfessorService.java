@@ -53,13 +53,9 @@ public class ProfessorService {
         ProfessorDao dao = new ProfessorDao(em);
 
         try {
-            Professor professor = dao.findById(id);
-            if (professor == null) {
-                throw new RuntimeException("Professor não encontrado com ID: " + id);
-            }
-            return professor;
+            return dao.findById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Falha ao buscar professor por ID.", e);
+            throw new RuntimeException(e.getMessage());
         } finally {
             if (em.isOpen()) {
                 em.close();

@@ -21,6 +21,10 @@ public class ProfessorDao {
     }
 
     public Professor findById(Long id) {
-        return em.find(Professor.class, id);
+            var professor = em.find(Professor.class, id);
+            if (professor == null) {
+                throw new RuntimeException("Professor não encontrado!");
+            }
+            return professor;
     }
 }
